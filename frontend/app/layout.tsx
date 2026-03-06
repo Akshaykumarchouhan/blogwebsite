@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
-const inter = Inter({ subsets: ['latin'] });
+import { ThemeProvider } from '@/context/ThemeContext';
+import { ToastProvider } from '@/components/ui/Toast';
 
 export const metadata: Metadata = {
     title: 'Professional Blog Website',
@@ -18,12 +19,16 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${inter.className} min-h-screen bg-background font-sans antialiased flex flex-col`}>
-                <Navbar />
-                <main className="flex-1">
-                    {children}
-                </main>
-                <Footer />
+            <body className={`min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased flex flex-col`}>
+                <ThemeProvider>
+                    <ToastProvider>
+                        <Navbar />
+                        <main className="flex-1">
+                            {children}
+                        </main>
+                        <Footer />
+                    </ToastProvider>
+                </ThemeProvider>
             </body>
         </html>
     );
